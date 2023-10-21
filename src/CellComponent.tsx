@@ -5,11 +5,11 @@ interface CellProps {
     cell: Cell
 }
 
-const CellComponent: FC< CellProps >    = () => {
+const CellComponent: FC< CellProps > = ({cell}) => {
 
     return (
-        <div className='cell'>
-
+        <div className={['cell', cell.color].join(' ')}>
+          {cell.figure?.logo && <img src={cell.figure.logo} />}
         </div>
     )
 
