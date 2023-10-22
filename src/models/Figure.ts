@@ -28,4 +28,16 @@ export class Figure{
         this.id = Math.random()
 
     }
+
+    public canMove(target: Cell){
+      if(target.figure?.color === this.color){
+        return false
+      }
+      if(target.figure?.name === Figures.KING){
+        return false
+      }
+      return true
+    }
+
+    moveFigure(target: Cell){}
 }

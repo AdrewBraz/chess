@@ -1,15 +1,16 @@
-import React, { FC} from 'react';
-import { Cell } from './models/Cell'
+
 
 interface CellProps {
-    cell: Cell
+    cell: Cell,
+    selected: boolean
+    click: (target: Cell) => void
 }
 
-const CellComponent: FC< CellProps > = ({cell}) => {
+const CellComponent: FC< CellProps > = (props) => {
 
     return (
-        <div className={['cell', cell.color].join(' ')}>
-          {cell.figure?.logo && <img src={cell.figure.logo} />}
+        <div >
+          
         </div>
     )
 

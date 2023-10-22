@@ -72,6 +72,22 @@ export class Board {
         this.getPawns(1, Colors.BLACK)
         this.getPawns(6, Colors.WHITE)
     }
+
+    public getCopyBoard(): Board{
+      const newBoard = new Board();
+      newBoard.cells = this.cells;
+      return newBoard
+    }
+
+    public highlightCells(target: Cell | null){
+      for(let y = 0; y < 8; y++){
+        const row = this.cells[y]
+        for(let x = 0; x < 8; x++){
+          const cell = this.cells[y][x]
+          cell.available = !!target?.figure?.canMove(cell)
+        }
+      }
+    }
     
 
 }
