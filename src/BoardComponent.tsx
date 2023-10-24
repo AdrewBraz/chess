@@ -14,9 +14,11 @@ const BoardComponent: FC<BoardProps> = ({board, setBoard}) => {
   const [selected, setSelected] = useState<Cell | null>(null)
 
   const click = (target: Cell) => {
-    console.log(console.log(selected))
-    if(target.figure){
-      console.log('smo')
+    if(selected && selected !== target && selected.figure?.canMove(target)){
+      selected?.moveFigure(target)
+      setSelected(null)
+      updateBoard()
+    } else if(target.figure) {
       setSelected(target)
     }
 
@@ -29,10 +31,12 @@ const BoardComponent: FC<BoardProps> = ({board, setBoard}) => {
 
   const updateBoard = () => {
     const newBoard = board.getCopyBoard();
+    console.log(newBoard)
     setBoard(newBoard)
   }
 
   useEffect(() => {
+    console.log(selected)
     highlightCells()
   }, [selected])
 
