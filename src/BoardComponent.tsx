@@ -31,13 +31,12 @@ const BoardComponent: FC<BoardProps> = ({board, setBoard}) => {
 
   const updateBoard = () => {
     const newBoard = board.getCopyBoard();
-    console.log(newBoard)
     setBoard(newBoard)
   }
 
   useEffect(() => {
-    console.log(selected)
     highlightCells()
+    console.log(board)
   }, [selected])
 
 

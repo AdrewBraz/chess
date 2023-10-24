@@ -30,18 +30,4 @@ export class Figure {
     }
 
 
-    canMove(target: Cell){
-        if(this.color === target.figure?.color){
-            return false
-        }
-        if(target.figure?.name === Figures.KING){
-            return false
-        }
-        return true
-    }
-
-    moveFigure(target: Cell){
-        console.log(target)
-    }
-
 }
