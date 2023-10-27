@@ -1,6 +1,6 @@
 import { Cell } from "./Cell";
 import { Colors } from "./Colors";
-import { Figure } from "./Figure";
+import { Figure, Figures } from "./Figure";
 import { Bishop } from "./Figures/Bishop";
 import { King } from "./Figures/King";
 import { Knight } from "./Figures/Knight";
@@ -10,6 +10,8 @@ import { Rook } from "./Figures/Rook";
 
 export class Board {
   cells: Cell[][] = [];
+  blackFigures: Figure[] = []
+  whiteFigures: Figure[] = []
 
   public initCells(){
     for(let i = 0; i < 8; i++){
@@ -77,6 +79,8 @@ export class Board {
   getCopyBoard(): Board {
     const newBoard = new Board();
     newBoard.cells = this.cells;
+    newBoard.blackFigures = this.blackFigures;
+    newBoard.whiteFigures = this.whiteFigures;
     return newBoard
   }
 
@@ -88,6 +92,21 @@ export class Board {
           target.available = !!selectedCell?.figure?.canMove(target)
         }
     }
+  }
+
+  watchForCheck(selectedCell: Cell | null){
+    for(let y = 0; y < this.cells.length; y++){
+        const row = this.cells[y]
+        for(let x = 0; x < row.length; x++){
+          const target = row[x]
+          if(target.figure?.name === Figures.KING && !!selectedCell?.figure?.canMove(target)){
+            console.log(target.figure.name)
+            return true
+          }
+        }
+    }
+    return false
+
   }
 
 }

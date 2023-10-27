@@ -9,5 +9,15 @@ export class Bishop extends Figure{
     super(color, cell)
     this.logo = color === Colors.BLACK ? BlackLogo : WhiteLogo
     this.name = Figures.BISHOP
-   }   
+   }
+
+   canMove(target: Cell): boolean {
+      if(!super.canMove(target)){
+        return false;
+      }
+       if(this.cell.isDiagonalEmpty(target)){
+        return true
+       }
+      return false
+    }
 }

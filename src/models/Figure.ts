@@ -29,5 +29,26 @@ export class Figure {
         this.id = Math.random()
     }
 
+    canCheck(target: Cell){
+        console.log(target.figure)
+        if(target.figure?.name === Figures.KING){
+            return true
+        }
+        return false
+    }
+
+
+    canMove(target: Cell){
+        if(this.color === target.figure?.color){
+            return false
+        }
+        
+        return true
+    }
+
+    moveFigure(target: Cell){
+        
+    }
+
 
 }
