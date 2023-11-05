@@ -52,3 +52,9 @@
   margin-left: 50px;
   background-color: lightgray;
 }
+
+.state{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

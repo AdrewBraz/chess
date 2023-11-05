@@ -77,22 +77,6 @@ export class Cell {
         return true
     }
 
-    // isDiagonalCheck(target: Cell){
-    //     const absX = Math.abs(this.y - target.y)
-    //     const absY = Math.abs(this.x - target.x)
-    //     if(absX !== absY){
-    //         return false
-    //     }
-    //     const dx = this.x < target.x ? 1 : -1
-    //     const dy = this.y < target.y ? 1 : -1
-    //     console.log('is diagonal ', target)
-    //     for(let i = 1; i < absY; i++){
-    //         console.log((this.board.getCell(this.x + dx*i, this.y + dy*i)))
-    //         if(this.board.getCell(this.x + dx*i, this.y + dy*i).figure?.name === Figures.KING){
-    //             console.log('King under attack')
-    //         }
-    //     }
-    // }
 
     setFigure(figure: Figure){
         this.figure = figure;

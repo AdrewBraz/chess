@@ -1,3 +1,5 @@
+import { cloneDeep } from 'lodash'
+
 import { Cell } from "./Cell";
 import { Colors } from "./Colors";
 import { Figure, Figures } from "./Figure";
@@ -12,6 +14,8 @@ export class Board {
   cells: Cell[][] = [];
   blackFigures: Figure[] = []
   whiteFigures: Figure[] = []
+
+
 
   public initCells(){
     for(let i = 0; i < 8; i++){
@@ -84,6 +88,12 @@ export class Board {
     return newBoard
   }
 
+  getPrevBoard() : Board {
+    const prevBoard = new Board();
+    prevBoard.cells = cloneDeep(this.cells)
+    return prevBoard;
+  }
+
   highlightCells(selectedCell: Cell | null){
     for(let y = 0; y < this.cells.length; y++){
         const row = this.cells[y]
@@ -100,7 +110,6 @@ export class Board {
         for(let x = 0; x < row.length; x++){
           const target = row[x]
           if(target.figure?.name === Figures.KING && !!selectedCell?.figure?.canMove(target)){
-            console.log(target.figure.name)
             return true
           }
         }

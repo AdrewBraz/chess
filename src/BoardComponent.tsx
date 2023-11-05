@@ -8,23 +8,26 @@ import { Figures, Figure } from './models/Figure';
 interface BoardProps {
   board: Board;
   setBoard: (board: Board) => void;
+  prevBoard: Board;
+  setPrevBoard: (board: Board) => void;
   currentPlayer: Player | null,
   swapPlayers: () => void
 }
 
-const BoardComponent: FC<BoardProps> = ({board, setBoard, currentPlayer, swapPlayers}) => {
+const BoardComponent: FC<BoardProps> = ({board, setBoard, prevBoard, setPrevBoard, currentPlayer, swapPlayers}) => {
   const [selected, setSelected] = useState<Cell | null>(null)
   const [check, setCheck] = useState(false)
 
-  console.log(check )
-
   const click = (target: Cell) => {
+    const previousBoard = board.getPrevBoard()
+    setPrevBoard(previousBoard)
     if(selected && selected !== target && selected.figure?.canMove(target) && target.figure?.name !== Figures.KING){
-      console.log(target.figure)
-      selected?.moveFigure(target)
-      setSelected(null)
-      updateBoard()
-      swapPlayers()
+      console.log(check)
+      if(!check){
+        selected?.moveFigure(target)
+        setSelected(null)
+        swapPlayers()
+      }
 
     }  else {
       if (target.figure?.color === currentPlayer?.color) {
@@ -42,11 +45,12 @@ const BoardComponent: FC<BoardProps> = ({board, setBoard, currentPlayer, swapPla
   const updateBoard = () => {
     const newBoard = board.getCopyBoard();
     setBoard(newBoard)
-    checkFigures()
+    checkFigures(board)
+
+    
   }
 
-  const checkFigures = () => {
-    console.log(board)
+  const checkFigures = (board: Board) => {
     const arr = []
     for(let x = 0; x < board.cells.length; x ++){
       const row = board.cells[x]
@@ -57,7 +61,9 @@ const BoardComponent: FC<BoardProps> = ({board, setBoard, currentPlayer, swapPla
     }
     if(arr.length > 0){
     arr.forEach(( cell: Cell): void => {
-      if(board.watchForCheck(cell)) {setCheck(true)}
+      if(!!board.watchForCheck(cell)) {
+        setCheck(true)
+      }
     })
   }
   }
@@ -70,7 +76,11 @@ const BoardComponent: FC<BoardProps> = ({board, setBoard, currentPlayer, swapPla
 
   return (
     <div>
-      <h3>Текущий игрок {currentPlayer?.color}</h3>
+      <div className='state'>
+        <h3>Текущий игрок {currentPlayer?.color}</h3>
+        {check ? <h3>Текущий игрок {currentPlayer?.color} под шахом</h3>: ''}
+        <h3></h3>
+      </div>
       <div className="board">
         {board.cells.map((row, index) => {
           return (
@@ -85,3 +95,4 @@ const BoardComponent: FC<BoardProps> = ({board, setBoard, currentPlayer, swapPla
 };
 
 export default BoardComponent;
+

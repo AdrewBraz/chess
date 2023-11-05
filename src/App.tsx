@@ -5,10 +5,12 @@ import { Board } from './models/Board';
 import LostFigures from './LostFigures';
 import { Colors } from './models/Colors';
 import { Player } from './models/Player';
+import { set } from 'lodash';
 
 const App = () => {
 
   const [board, setBoard] = useState(new Board())
+  const [prevBoard, setPrevBoard] = useState(new Board())
   const [whitePlayer, setWhitePlayer] = useState(new Player(Colors.WHITE))
   const [blackPlayer, setBlackPlayer] = useState(new Player(Colors.BLACK))
   const [currentPlayer, setCurrentPlayer] = useState<Player | null>(null);
@@ -36,6 +38,8 @@ const App = () => {
 
       <BoardComponent
         board={board}
+        prevBoard={prevBoard}
+        setPrevBoard={setPrevBoard}
         currentPlayer={currentPlayer}
         setBoard={setBoard}
         swapPlayers={swapPlayers}
