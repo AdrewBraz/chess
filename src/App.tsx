@@ -28,6 +28,10 @@ const App = () => {
     setCurrentPlayer(currentPlayer?.color === Colors.WHITE ? blackPlayer : whitePlayer)
   }
 
+  const setPlayer = (player: Player): void => {
+    setCurrentPlayer(player)
+  }
+
   useEffect(() => {
     restart()
   }, [])
@@ -43,6 +47,7 @@ const App = () => {
         currentPlayer={currentPlayer}
         setBoard={setBoard}
         swapPlayers={swapPlayers}
+        setPlayer={setPlayer}
       />
       <div>
         <LostFigures
