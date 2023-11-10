@@ -14,6 +14,8 @@ export class Board {
   cells: Cell[][] = [];
   blackFigures: Figure[] = []
   whiteFigures: Figure[] = []
+  shortCastling: boolean = false
+  longCastling: boolean = false
 
 
 
@@ -35,6 +37,18 @@ export class Board {
   public getCell(x:number, y: number){
     return this.cells[y][x]
   }
+
+  public setCastling(dx: number){
+    console.log(dx)
+    if(dx === 3){
+      this.longCastling = true
+      this.shortCastling = false
+    } else {
+      this.shortCastling = true
+      this.longCastling = false
+    }
+  }
+
   private addRooks(){
     new Rook(Colors.BLACK, this.getCell(0, 0))
     new Rook(Colors.BLACK, this.getCell(7, 0))

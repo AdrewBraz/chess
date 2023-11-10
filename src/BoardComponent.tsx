@@ -26,9 +26,7 @@ const BoardComponent: FC<BoardProps> = ({board, setBoard, prevBoard, setPrevBoar
     if(selected && selected !== target && selected.figure?.canMove(target) && target.figure?.name !== Figures.KING){
         selected?.moveFigure(target)
         checkFigures(board)
-        if(!check){
-          setSelected(null)
-        }
+        setSelected(null)
         swapPlayers()
 
     }  else {
@@ -83,7 +81,7 @@ const BoardComponent: FC<BoardProps> = ({board, setBoard, prevBoard, setPrevBoar
   }, [selected])
 
   useEffect(() => {
-    console.log(check)
+    
   }, [check])
 
 
