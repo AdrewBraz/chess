@@ -26,6 +26,7 @@ const BoardComponent: FC<BoardProps> = ({board, setBoard, prevBoard, setPrevBoar
     if(selected && selected !== target && selected.figure?.canMove(target) && target.figure?.name !== Figures.KING){
         selected?.moveFigure(target)
         checkFigures(board)
+        checkPawns(board)
         setSelected(null)
         swapPlayers()
 
@@ -73,6 +74,17 @@ const BoardComponent: FC<BoardProps> = ({board, setBoard, prevBoard, setPrevBoar
     })
     result.includes(true) ? setCheck(true) : setCheck(false)
   }
+  }
+}
+
+const checkPawns = (board: Board) : Cell | void => {
+  const y = currentPlayer?.color === Colors.WHITE ? 0 : 7
+  const row = board.cells[y]
+  for(let x = 0; x < row.length; x ++){
+    if(board.getCell(x, y).figure?.name === Figures.PAWN){
+      console.log(board.getCell(x, y).id)
+      return board.getCell(x, y)
+    }
   }
 }
 

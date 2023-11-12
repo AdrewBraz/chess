@@ -1,6 +1,7 @@
 import { Colors } from "./Colors";
 import { Figure, Figures } from "./Figure";
 import { Board } from "./Board";
+import { Player } from "./Player";
 
 export class Cell {
     readonly x : number;
@@ -10,6 +11,7 @@ export class Cell {
     figure: Figure | null
     available: boolean
     id: number
+    isSwitchable: boolean = false
 
     constructor(board: Board, x: number, y: number, color: Colors, figure: Figure | null){
         this.x = x;
@@ -85,6 +87,28 @@ export class Cell {
         figure.color === Colors.BLACK ? this.board.blackFigures.push(figure) : this.board.whiteFigures.push(figure)
     }
 
+    private getCastlingFigures(target: Cell): void{
+        let y = target.figure?.color === Colors.WHITE ? 7 : 0
+        if(this.board.longCastling){
+          const rook = this.board.getCell(7, y)
+          const rookTarget = this.board.getCell(5, y)
+          if( rook.figure){
+            rookTarget.figure = rook.figure;
+            rookTarget.setFigure(rook.figure)
+            rook.figure = null
+          }
+        }
+        if(this.board.shortCastling){
+          const rook = this.board.getCell(0, y)
+          const rookTarget = this.board.getCell(2, y)
+          if( rook.figure){
+            rookTarget.figure = rook.figure;
+            rookTarget.setFigure(rook.figure)
+            rook.figure = null
+          }
+        }
+      }
+
     moveFigure(target: Cell){
         if(this.figure && this.figure?.canMove(target)){
             this.figure.moveFigure(target)
@@ -95,25 +119,9 @@ export class Cell {
             target.setFigure(this.figure)
             this.figure = null
         }
-        if(this.board.shortCastling){
-            const rook = this.board.getCell(0, 7)
-            const rookTarget = this.board.getCell(2, 7)
-            if(rook.figure){
-                console.log(rook.figure)
-                rookTarget.figure = rook.figure
-                rookTarget.setFigure(rook.figure)
-                rook.figure = null
-          }
+        if(target.figure?.name === Figures.PAWN && (target.y === 0 || target.y === 7)){
+            console.log(this)
         }
-        if(this.board.longCastling){
-            const rook = this.board.getCell(7, 7)
-            const rookTarget = this.board.getCell(5, 7)
-            if(rook.figure){
-                console.log(rook.figure)
-                rookTarget.figure = rook.figure
-                rookTarget.setFigure(rook.figure)
-                rook.figure = null
-            }
-        }
+        this.getCastlingFigures(target)
     }
 }

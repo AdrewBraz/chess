@@ -20,7 +20,9 @@ export class King extends Figure{
       if(this.isFirstStep ){
         if(this.cell.isHorizontallEmpty(target)){
           const maxDx = Math.abs(this.cell.x - target.x)
-          this.cell.board.setCastling(maxDx)
+          if(maxDx > 1){
+            this.cell.board.setCastling(maxDx)
+          }
           return true
         }
       }

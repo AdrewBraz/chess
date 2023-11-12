@@ -9,6 +9,7 @@ import { Knight } from "./Figures/Knight";
 import { Pawn } from "./Figures/Pawn";
 import { Queen } from "./Figures/Queen";
 import { Rook } from "./Figures/Rook";
+import { Player } from './Player';
 
 export class Board {
   cells: Cell[][] = [];
