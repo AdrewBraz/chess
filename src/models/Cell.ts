@@ -120,7 +120,7 @@ export class Cell {
             this.figure = null
         }
         if(target.figure?.name === Figures.PAWN && (target.y === 0 || target.y === 7)){
-            console.log(this)
+            target.isSwitchable = true
         }
         this.getCastlingFigures(target)
     }

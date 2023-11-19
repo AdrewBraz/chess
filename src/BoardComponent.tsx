@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react'
+import { flatMapDeep, uniq } from 'lodash'
 import { Board } from './models/Board'
 import CellComponent from './CellComponent';
 import { Cell } from './models/Cell';
@@ -59,6 +60,34 @@ const BoardComponent: FC<BoardProps> = ({board, setBoard, prevBoard, setPrevBoar
       setBoard(newBoard)
   }
 
+  const findKing = () => {
+    for(let x = 0; x < board.cells.length; x ++){
+      const row = board.cells[x]
+      for(let y = 0; y < row.length; y++){
+        if(board.getCell(y, x).figure?.name === Figures.KING && board.getCell(y, x).figure?.color === currentPlayer?.color){
+          return board.getCell(y, x)
+        }
+    }
+  }
+}
+
+const checkMate = () => {
+    const arr = []
+    for(let x = 0; x < board.cells.length; x ++){
+      const row = board.cells[x]
+      for(let y = 0; y < row.length; y++){
+        if(!!board.getCell(y, x).figure && board.getCell(y, x).figure && board.getCell(y, x).figure?.color !== currentPlayer?.color){
+          arr.push(board.getCell(y, x))
+        }
+    }
+  }
+  if(arr.length > 0){
+    const result = arr.map((cell: Cell) => board.watchForMade(cell))
+    const king = findKing()
+    console.log(king)
+  }
+}
+
   const checkFigures = (board: Board) => {
     const arr = []
     for(let x = 0; x < board.cells.length; x ++){
@@ -82,7 +111,6 @@ const checkPawns = (board: Board) : Cell | void => {
   const row = board.cells[y]
   for(let x = 0; x < row.length; x ++){
     if(board.getCell(x, y).figure?.name === Figures.PAWN){
-      console.log(board.getCell(x, y).id)
       return board.getCell(x, y)
     }
   }
@@ -93,7 +121,7 @@ const checkPawns = (board: Board) : Cell | void => {
   }, [selected])
 
   useEffect(() => {
-    
+    checkMate()
   }, [check])
 
 
@@ -113,6 +141,7 @@ const checkPawns = (board: Board) : Cell | void => {
           )
         })}
       </div>
+
     </div>
   );
 };

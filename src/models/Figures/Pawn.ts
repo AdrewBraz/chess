@@ -12,6 +12,7 @@ export class Pawn extends Figure{
    }
 
    isFirstStep: boolean = true
+   
 
    canMove(target: Cell): boolean {
       if(!super.canMove(target))
