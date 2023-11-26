@@ -15,9 +15,11 @@ interface BoardProps {
   currentPlayer: Player | null,
   swapPlayers: () => void
   setPlayer: (player: Player) => void
+  switchPawn: Cell | null,
+  setSwitch: (cell: Cell) => void
 }
 
-const BoardComponent: FC<BoardProps> = ({board, setBoard, prevBoard, setPrevBoard, currentPlayer, setPlayer, swapPlayers}) => {
+const BoardComponent: FC<BoardProps> = ({board, setBoard, prevBoard, setPrevBoard, currentPlayer, setPlayer, swapPlayers, setSwitch, switchPawn}) => {
   const [selected, setSelected] = useState<Cell | null>(null)
   const [check, setCheck] = useState(false)
 
@@ -27,7 +29,7 @@ const BoardComponent: FC<BoardProps> = ({board, setBoard, prevBoard, setPrevBoar
     if(selected && selected !== target && selected.figure?.canMove(target) && target.figure?.name !== Figures.KING){
         selected?.moveFigure(target)
         checkFigures(board)
-        checkPawns(board)
+        console.log(checkPawns(board))
         setSelected(null)
         swapPlayers()
 
@@ -111,7 +113,7 @@ const checkPawns = (board: Board) : Cell | void => {
   const row = board.cells[y]
   for(let x = 0; x < row.length; x ++){
     if(board.getCell(x, y).figure?.name === Figures.PAWN){
-      return board.getCell(x, y)
+      setSwitch(board.getCell(x, y))
     }
   }
 }

@@ -5,7 +5,8 @@ import { Board } from './models/Board';
 import LostFigures from './LostFigures';
 import { Colors } from './models/Colors';
 import { Player } from './models/Player';
-import { set } from 'lodash';
+import { Cell } from './models/Cell';
+import ChooseFigure from './ChooseFigure';
 
 const App = () => {
 
@@ -14,6 +15,7 @@ const App = () => {
   const [whitePlayer, setWhitePlayer] = useState(new Player(Colors.WHITE))
   const [blackPlayer, setBlackPlayer] = useState(new Player(Colors.BLACK))
   const [currentPlayer, setCurrentPlayer] = useState<Player | null>(null);
+  const [switchPawn, setSwitch] = useState<Cell | null>(null)
   
 
   const restart = () => {
@@ -39,16 +41,25 @@ const App = () => {
 
   return (
     <div className="app">
-
-      <BoardComponent
-        board={board}
-        prevBoard={prevBoard}
-        setPrevBoard={setPrevBoard}
-        currentPlayer={currentPlayer}
-        setBoard={setBoard}
-        swapPlayers={swapPlayers}
-        setPlayer={setPlayer}
-      />
+      <div>
+        <BoardComponent
+          board={board}
+          prevBoard={prevBoard}
+          setPrevBoard={setPrevBoard}
+          currentPlayer={currentPlayer}
+          setBoard={setBoard}
+          swapPlayers={swapPlayers}
+          setPlayer={setPlayer}
+          switchPawn={switchPawn}
+          setSwitch={setSwitch}
+        />
+        { switchPawn ? 
+          <div>
+            <ChooseFigure currentPlayer={currentPlayer} setSwitch={setSwitch}/>
+          </div> :
+          null
+        }
+      </div>
       <div>
         <LostFigures
           title="Черные фигуры"
